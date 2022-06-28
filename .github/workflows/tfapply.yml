@@ -32,7 +32,7 @@ jobs:
     - run: aws sts get-caller-identity 
      
     - name: Terraform Init
-      run: terraform init -backend-config="	demo-tfstate-s3-backend-01" -backend-config="key=${{ github.repository }}/terraform.tfstate" -backend-config="region=eu-west-1"
+      run: terraform init -backend-config="bucket=demo-tfstate-s3-backend-01" -backend-config="key=${{ github.repository }}/terraform.tfstate" -backend-config="region=eu-west-1"
    
     - name: Terraform Validate
       run: terraform validate
