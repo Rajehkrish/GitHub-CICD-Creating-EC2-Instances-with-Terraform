@@ -29,10 +29,9 @@ jobs:
   #       aws-secret-access-key: ${{ secrets.SECRET_KEY }}
          aws-region: us-east-2
          role-to-assume: arn:aws:iam::461055178737:role/github-action-role
-        role-session-name: samplerolesession
+    #    role-session-name: samplerolesession
   #      role-session-name: GithubActionsSession
     - run: aws sts get-caller-identity 
-      aws-region: ${{env.AWS_DEFAULT_REGION}}
     - name: Terraform Init
       run: terraform init 
    
