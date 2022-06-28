@@ -4,18 +4,19 @@ on:
   push:
     branches:
     - main
+
 jobs:
   terraform:
     name: 'Terraform'
     runs-on: ubuntu-latest
     
-#    permissions:
-#      id-token: write
- #     contents: read
+    permissions:
+      id-token: write
+      contents: read
     
-   env:
-        AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY }}
-        AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_KEY }}
+ #   env:
+  #      AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY }}
+   #     AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_KEY }}
 
     steps:
     - name: Checkout
@@ -24,14 +25,15 @@ jobs:
     - name: Configure AWS Credentials
       uses: aws-actions/configure-aws-credentials@v1
       with:
-         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
-         aws-secret-access-key: ${{ secrets.AWS_SECRET_KEY }}
-         aws-region: us-east-1
-  #     role-session-name: GithubActionsSession
+  #       aws-access-key-id: ${{ secrets.ACCESS_KEY }}
+  #       aws-secret-access-key: ${{ secrets.SECRET_KEY }}
+         aws-region: us-east-2
+         role-to-assume: arn:aws:iam::461055178737:role/terraform-github
+        role-session-name: GithubActionsSession
     - run: aws sts get-caller-identity 
      
     - name: Terraform Init
-      run: terraform init -backend-config="bucket=demo-tfstate-s3-backend-01" -backend-config="key=${{ github.repository }}/terraform.tfstate" -backend-config="region=eu-west-1"
+      run: terraform init -backend-config="bucket=terraform-state-files-backend-bucket" -backend-config="key=${{ github.repository }}/terraform.tfstate" -backend-config="region=us-east-2"
    
     - name: Terraform Validate
       run: terraform validate
