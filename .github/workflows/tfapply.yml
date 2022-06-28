@@ -1,0 +1,49 @@
+name: 'Terraform'
+
+on:
+  push:
+    branches:
+    - main
+
+jobs:
+  terraform:
+    name: 'Terraform'
+    runs-on: ubuntu-latest
+    
+    permissions:
+      id-token: write
+      contents: read
+    
+ #   env:
+        AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY }}
+        AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_KEY }}
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+    
+    - name: Configure AWS Credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+  #       aws-access-key-id: ${{ secrets.ACCESS_KEY }}
+  #       aws-secret-access-key: ${{ secrets.SECRET_KEY }}
+         aws-region: us-east-2
+  #       role-to-assume: arn:aws:iam::295702472685:role/githubactions
+  #      role-session-name: GithubActionsSession
+    - run: aws sts get-caller-identity 
+     
+    - name: Terraform Init
+      run: terraform init -backend-config="bucket=terraform-state-files-backend-bucket" -backend-config="key=${{ github.repository }}/terraform.tfstate" -backend-config="region=us-east-2"
+   
+    - name: Terraform Validate
+      run: terraform validate
+
+    - name: terraform plan
+      run: terraform plan 
+       
+    - name: Terraform Apply
+      if: github.ref == 'refs/heads/santhosh' && github.event_name == 'push'
+      run: terraform apply -auto-approve -input=true
+ 
+      
+      
