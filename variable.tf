@@ -1,24 +1,13 @@
-variable "region" {
-default = "us-east-1"
-}
-variable "access_key" {
-
-  type    = string
-  default = "AKIAWWWIHW7YX6J2DWCF"
-}
-variable "secret_key" {
-  type = string
-  default = "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"
-
+terraform {
+  backend "s3" {
+  }
 }
 
+provider "aws" {
+  region     = var.region
+}
 
-
-
-
-
-
-
-
-
-
+resource "aws_instance" "myec2" {
+   ami 			= "ami-0022f774911c1d690"
+   instance_type 	= "t2.micro"
+}
