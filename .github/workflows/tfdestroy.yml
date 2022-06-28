@@ -9,8 +9,8 @@ jobs:
       id-token: write
       contents: read
 #   env:
-#      AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY }}
-#      AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_KEY }}
+      AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY }}
+      AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_KEY }}
 #     # AWS_REGION: 'us-west-1'
    steps:
       - name: Checkout
@@ -22,7 +22,7 @@ jobs:
   #        aws-access-key-id: ${{ secrets.ACCESS_KEY }}
   #        aws-secret-access-key: ${{ secrets.SECRET_KEY }}
            aws-region: us-east-2
-           role-to-assume: arn:aws:iam::295702472685:role/githubactions
+  #         role-to-assume: arn:aws:iam::295702472685:role/githubactions
   #        role-session-name: GithubActionsSession
       - run: aws sts get-caller-identity   
 
