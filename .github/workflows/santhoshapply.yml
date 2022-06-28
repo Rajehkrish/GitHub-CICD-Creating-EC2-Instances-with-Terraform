@@ -15,8 +15,8 @@ jobs:
       contents: read
     
  #   env:
-  #      AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY }}
-   #     AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_KEY }}
+ #       AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY }}
+ #       AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_KEY }}
 
     steps:
     - name: Checkout
@@ -27,9 +27,9 @@ jobs:
       with:
   #       aws-access-key-id: ${{ secrets.ACCESS_KEY }}
   #       aws-secret-access-key: ${{ secrets.SECRET_KEY }}
-  #       aws-region: us-east-2
+         aws-region: us-east-2
          role-to-assume: arn:aws:iam::461055178737:role/terraform-github
-        role-session-name: GithubActionsSession
+  #      role-session-name: GithubActionsSession
     - run: aws sts get-caller-identity 
      
     - name: Terraform Init
@@ -42,5 +42,8 @@ jobs:
       run: terraform plan 
        
     - name: Terraform Apply
-      if: github.ref == 'refs/heads/main' && github.event_name == 'push'
+      if: github.ref == 'refs/heads/santhosh' && github.event_name == 'push'
       run: terraform apply -auto-approve -input=true
+ 
+      
+      
