@@ -8,10 +8,10 @@ jobs:
    permissions:
       id-token: write
       contents: read
-   env:
-     AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY }}
-     AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_KEY }}
-     AWS_REGION: 'us-east-1'
+#   env:
+#      AWS_ACCESS_KEY_ID: ${{ secrets.ACCESS_KEY }}
+#      AWS_SECRET_ACCESS_KEY: ${{ secrets.SECRET_KEY }}
+#     # AWS_REGION: 'us-west-1'
    steps:
       - name: Checkout
         uses: actions/checkout@v2
@@ -19,16 +19,16 @@ jobs:
       - name: Configure AWS Credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_KEY }}
+  #        aws-access-key-id: ${{ secrets.ACCESS_KEY }}
+  #        aws-secret-access-key: ${{ secrets.SECRET_KEY }}
            aws-region: us-east-1
-   #        role-to-assume: arn:aws:iam::xxxxxx:role/githubactions
+           role-to-assume: arn:aws:iam::461055178737:role/github-action-role
   #        role-session-name: GithubActionsSession
       - run: aws sts get-caller-identity   
 
       - name: Terraform Init
         id: init
-        run: terraform init -backend-config="bucket=demo-tfstate-s3-backend-01" -backend-config="key=${{ github.repository }}/terraform.tfstate" -backend-config="region=eu-west-1"
+        run: terraform init 
         
       - name: Show Destroy plan
         run: terraform plan -destroy
@@ -37,4 +37,3 @@ jobs:
       - name: Terraform destroy
         id: destroy
         run: terraform destroy -auto-approve
-        
