@@ -22,7 +22,7 @@ jobs:
   #        aws-access-key-id: ${{ secrets.ACCESS_KEY }}
   #        aws-secret-access-key: ${{ secrets.SECRET_KEY }}
            aws-region: us-east-2
-           role-to-assume: arn:aws:iam::461055178737:role/github-action-role
+           role-to-assume: arn:aws:iam::xxxxxxx:role/github-action-role
   #        role-session-name: GithubActionsSession
       - run: aws sts get-caller-identity   
 
