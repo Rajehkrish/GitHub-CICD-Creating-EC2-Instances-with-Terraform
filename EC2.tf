@@ -10,6 +10,7 @@ resource "aws_instance" "myec2" {
 terraform {
   backend "s3" {
   bucket = "terraformproj-github"
+  key    = "dragan/terraform.tfstate"
   region = "us-east-1"
   }
 }
