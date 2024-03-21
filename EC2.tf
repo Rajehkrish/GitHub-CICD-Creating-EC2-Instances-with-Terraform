@@ -1,12 +1,15 @@
 provider "aws" {
-  region     = var.region
+  region     = "us-east-1"
 }
 
 resource "aws_instance" "myec2" {
-   ami 			= "ami-0cff7528ff583bf9a"
+   ami 			= "ami-02d7fd1c2af6eead0"
    instance_type 	= "t2.micro"
 }
 
 terraform {
-  backend "s3" {}
+  backend "s3" {
+  bucket = "terraformproj-github"
+  region = "us-east-1"
+  }
 }
