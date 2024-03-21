@@ -16,7 +16,7 @@ jobs:
         uses: aws-actions/configure-aws-credentials@v1
         with:
            aws-region: us-east-2
-           role-to-assume: arn:aws:iam::xxxxxxx:role/github-action-role
+           role-to-assume: arn:aws:iam::211125323995:role/terraform-github
   #        role-session-name: GithubActionsSession
       - run: aws sts get-caller-identity   
 
